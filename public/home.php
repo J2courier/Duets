@@ -11,7 +11,7 @@
         <nav class="vertical-nav">
             <ul>
                 <li><button><img src="assets/images/home.png" alt="img"></button></li>
-                <li><button><img src="assets/images/task.png" alt="img"></button></li>
+                <li><a href="task.php"><button><img src="assets/images/task.png" alt="img"></button></a></li>
                 <li><button><img src="assets/images/FlashcardIcon.png" alt="img"></button></li>
                 <li><button><img src="assets/images/settings.png" alt="img"></button></li>
             </ul>
