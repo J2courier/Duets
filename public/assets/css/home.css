@@ -1,0 +1,511 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    margin: 0px;
+    letter-spacing: 1px; /* Reduced from 2px to 1px for better readability */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    letter-spacing: 1.5px; /* Added specific letter spacing for headings */
+}
+
+p, a, li, button {
+    letter-spacing: 0.8px; /* Added specific letter spacing for text elements */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgba(255, 255, 255, 0.938);
+}
+
+main {
+    /* border: solid 1px black; */
+    height: 100vh;
+    width: 100%;
+    display: flex;
+}
+
+.vertical-nav {
+    background-color: Blue;
+    padding: 10px;
+}
+
+.vertical-nav ul li {
+    list-style: none;
+    margin-bottom: 20px;
+}
+.vertical-nav button {
+    background-color: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.vertical-nav button:hover img {
+  filter: brightness(1.2); 
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+.vertical-nav button {
+  border-radius: 10px;
+}
+
+
+.vertical-nav img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+/* Add or update these styles */
+.nav-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-button:active, .nav-button:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-button img {
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+    filter: brightness(0) invert(1); /* Makes dark icons white */
+}
+
+
+button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vertical-nav ul li button {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.vertical-nav ul li button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+.body-section {
+    /* border: solid 1px black; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.horizontal-nav {
+    padding: 20px;
+    height: 10vh; 
+}
+.horizontal-nav ul li {
+    list-style: none;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 20vh 65vh;
+    gap: 15px;
+    padding: 0 20px 20px 20px;
+    height: 85vh; 
+    
+
+    grid-template-areas:
+        "card1 card2 card3 card4"
+        "tasks tasks tasks progress";
+}
+
+
+/* Counter cards with borders and box shadows */
+.counter-card-1, .counter-card-2, .counter-card-3, .counter-card-4 {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+
+.counter-card-1 {
+    grid-area: card1;
+    background-color: #ffffff;
+}
+
+.counter-card-2 {
+    grid-area: card2;
+    background-color: #ffffff;
+}
+
+.counter-card-3 {
+    grid-area: card3;
+    background-color: #ffffff;
+}
+
+.counter-card-4 {
+    grid-area: card4;
+    background-color: #ffffff;
+}
+
+.task-container, .progress-container {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 20px;
+    background-color: white;
+    overflow-y: auto;
+}
+
+.task-container {
+    grid-area: tasks;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-container-head {
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+
+}
+
+.head-north,
+.head-south {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    /* border: solid 1px black; */
+    padding: 10px;
+}
+
+
+
+.head-south button,
+.head-north button {
+    height: 40px; 
+}
+.task-container-head {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.task-container-head h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    flex-grow: 1;
+}
+
+.task-container-head button {
+    background-color: #0321a8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+
+.task-container-head button:hover {
+    background-color: #1e4e8c;
+    /* transform: translateY(-2px); */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.task-container-head button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.task-container-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    /* border: solid 1px black; */
+    height: 80%;
+}
+
+.progress-container {
+    grid-area: progress;
+}
+
+
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(4, auto);
+        grid-template-areas:
+            "card1 card2"
+            "card3 card4"
+            "tasks tasks"
+            "progress progress";
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, auto);
+        grid-template-areas:
+            "card1"
+            "card2"
+            "card3"
+            "card4"
+            "tasks"
+            "progress";
+    }
+}
+
+
+.task-form {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 8px 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-form h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.cancel-btn, .add-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.add-btn {
+    background-color: #0321a8;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.add-btn:hover {
+    background-color: #1e4e8c;
+}
+
+/* Task item styling */
+.task-item {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 15px;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.task-item.completed {
+    background-color: #f8f8f8;
+    opacity: 0.8;
+}
+
+.task-item.completed .task-item-body h4 {
+    text-decoration: line-through;
+    color: #888;
+}
+
+
+.task-type {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.task-category {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase; /* Changed from capitalize to uppercase */
+}
+
+.task-item-body h4 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+/* Task item footer styling */
+.task-item-footer {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+/* More button styling */
+.more-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.more-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.more-btn img {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* Action buttons styling */
+.action-buttons {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+    min-width: 120px;
+}
+
+.action-buttons button {
+    padding: 8px 12px;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+}
+
+.action-buttons button:hover {
+    background-color: #f5f5f5;
+}
+
+.complete-btn {
+    color: #34A853;
+}
+
+.delete-btn {
+    color: #EA4335;
+}
+
+/* Task completed styling */
+.task-item.completed .task-item-body h4 {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.task-item.completed {
+    background-color: #f8f8f8;
+    opacity: 0.8;
+}
+
+/* Error message styling */
+.error-message {
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.task-category[style*="background-color: #1E90FF"] {
+    color: white; 
+}
+
+.task-category[style*="background-color: #8A2BE2"] {
+    color: white; 
+}
+
+.task-category[style*="background-color: #00CED1"] {
+    color: white; 
+}
