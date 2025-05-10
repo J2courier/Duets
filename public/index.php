@@ -33,7 +33,7 @@
                 <ul>
                     <li> 
                         <div class="Lords">
-                            <img src="" alt="">
+                            <img src="assets/images/lords.jpg" alt="img" class="lords-img">
                             <h3>Lordenel Arroyo</h3>
                         </div>
                     </li>
@@ -51,7 +51,7 @@
                     </li>
                     <li> 
                         <div class="vince">
-                            <img src="" alt="">
+                            <img src="assets/images/vince.jpg" alt="">
                             <h3>Vince Gabriel Cartujano</h3>
                         </div>
                     </li>
@@ -65,39 +65,6 @@
                 </div>
             </div>
         </section>
-        <footer>
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h2>Duets</h2>
-                    <p>A final project for Application Development. <br> Duets satisfies the CRUD functionalities and has a local database. 
-                       We offer study tools such as flashcard reviewer, quizzer, task manager, and more to help the user increase their productivity
-                       in education.     
-                    </p>
-                </div>
-                <div class="footer-links">
-                    <h3>Members</h3>
-                    <ul>
-                        <li>Lordenel Arroyo</li>
-                        <li>Jherson Bartolay</li>
-                        <li>Japheth Batan</li>
-                        <li>Vince Gabriel Cartujano</li>
-            
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h3>About us</h3>
-                    <p> We are from Section 2B<br>
-                        We are composed of 4 members in total. <br>
-                        We created a project that performs basic CRUD operations. <br>
-                        We used PHP, HTML, CSS, and JavaScript. <br>
-                        We used vercel to deploy this project and make it visible to the public. <br>
-                    </p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy;<script>document.write(new Date().getFullYear())</script> Duets. All rights reserved.</p>
-            </div>
-        </footer>
     </main>
  
 </body>

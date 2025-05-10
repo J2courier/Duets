@@ -104,6 +104,11 @@ nav ul li button:active {
     height: 90%;
     width: 90%;
     object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+.welcome-img img:hover {
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
 }
 .welcome-txt {
     /* border: solid 1px black; */
@@ -183,7 +188,6 @@ nav ul li button:active {
 }
 
 .Lords, .Jherson, .Japheth, .vince, .teacher {
-    /* border: solid 1px rgb(199, 10, 10); */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -202,6 +206,8 @@ nav ul li button:active {
     border-radius: 5px;
     object-fit: contain;
 }
+
+
 
 .subject-teacher {
     /* border: solid 1px rgb(0, 160, 189); */
@@ -264,7 +270,7 @@ nav ul li button:active {
 
 footer {
     width: 100%;
-    background-color: #0321a8;
+    background-color: #ffffff00;
     border-radius: 10px 10px 0 0 ;
     border: solid 1px rgb(212, 231, 255);
     padding: 40px 20px 20px;
@@ -276,41 +282,9 @@ footer {
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    margin-bottom: 30px;
+    gap: 10px;
 }
 
-.footer-logo h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #ffffff;
-}
-
-.footer-links h3, .footer-contact h3 {
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-    color: #ffffff;
-}
-
-.footer-links ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-links ul li {
-    margin-bottom: 8px;
-}
-
-.footer-links ul li a {
-    text-decoration: none;
-    color: #e6e6e6;
-    transition: color 0.3s ease;
-}
-
-.footer-links ul li a:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
 
 .footer-contact p {
     margin-bottom: 8px;
@@ -322,9 +296,9 @@ footer {
     /* border-top: 1px solid #ddd; */
 }
 
-.footer-bottom p {
-    color: #e6e6e6;
-}
+    .footer-bottom p {
+        color: #e6e6e6;
+    }
 
 @media (max-width: 768px) {
     .footer-content {
@@ -336,4 +310,14 @@ footer {
     .footer-content {
         grid-template-columns: 1fr;
     }
+}
+
+/* Add filter shadow to all images */
+img {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: filter 0.3s ease;
+}
+
+img:hover {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
 }
