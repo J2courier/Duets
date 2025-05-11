@@ -112,11 +112,7 @@
                             <button id="addTaskBtn">Add Task</button>
                             <button id="addLessonBtn">Add Lesson</button>
                         </div>
-                        <div class="head-south">
-                            <button class="school">School</button>
-                            <button class="work">Work</button>
-                            <button class="personal">Personal</button>
-                        </div>
+                        
                     </div>
                     <div class="task-container-body">
                         

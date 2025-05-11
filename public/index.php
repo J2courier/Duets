@@ -49,7 +49,7 @@ clearstatcache();
                     </li>
                     <li> 
                         <div class="Japheth">
-                            <img src="" alt="">
+                            <img src="assets/images/japheth.jpg" alt="img">
                             <h3>Japheth Batan</h3>
                         </div>
                     </li>

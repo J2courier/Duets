@@ -573,53 +573,75 @@ button {
     z-index: 1000;
 }
 
-.modal-content {
+.delete-confirmation-modal .modal-content {
     background-color: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     max-width: 400px;
     width: 90%;
 }
 
-.modal-content h4 {
+.delete-confirmation-modal h4 {
     margin-top: 0;
     color: #333;
 }
 
-.modal-content p {
+.delete-confirmation-modal p {
     margin-bottom: 20px;
     color: #555;
 }
 
-.modal-actions {
+.delete-confirmation-modal .modal-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
 }
 
-.modal-actions button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.modal-actions .cancel-btn {
+.delete-confirmation-modal .cancel-btn {
     background-color: #f1f1f1;
     color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.modal-actions .confirm-btn {
+.delete-confirmation-modal .confirm-btn {
     background-color: #EA4335;
     color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.modal-actions .cancel-btn:hover {
-    background-color: #e0e0e0;
+.delete-confirmation-modal .cancel-btn:hover {
+    background-color: #e4e4e4;
 }
 
-.modal-actions .confirm-btn:hover {
-    background-color: #d32f2f;
+.delete-confirmation-modal .confirm-btn:hover {
+    background-color: #d73125;
+}
+
+.delete-confirmation-modal .confirm-btn:disabled {
+    background-color: #f5a19a;
+    cursor: not-allowed;
+}
+
+/* Animation for modal and task items */
+.delete-confirmation-modal {
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+}
+
+.delete-confirmation-modal.fade-out {
+    opacity: 0;
+}
+
+/* Status message in delete modal */
+.delete-confirmation-modal .status-message {
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 8px 12px;
 }

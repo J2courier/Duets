@@ -259,17 +259,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 task_id: taskId
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                // Refresh counters
+                // Task was deleted successfully
+                console.log('Task deleted successfully');
+                // Update counters to reflect the deleted task
                 updateCounters();
             } else {
                 console.error('Error deleting task:', data.message);
+                alert('Failed to delete task: ' + data.message);
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            alert('An error occurred while deleting the task. Please try again.');
         });
     }
     
@@ -332,6 +341,9 @@ function showDeleteConfirmation(taskId, taskTitle, taskItem, actionButtons) {
         existingModal.remove();
     }
     
+    // Store the element that had focus before opening the modal
+    const previouslyFocusedElement = document.activeElement;
+    
     // Create modal container
     const modal = document.createElement('div');
     modal.className = 'delete-confirmation-modal';
@@ -341,6 +353,7 @@ function showDeleteConfirmation(taskId, taskTitle, taskItem, actionButtons) {
         <div class="modal-content">
             <h4>Confirm Deletion</h4>
             <p>Are you sure you want to delete "${taskTitle}"?</p>
+            <div class="status-message" style="display: none; margin: 10px 0; padding: 8px; border-radius: 4px;"></div>
             <div class="modal-actions">
                 <button class="cancel-btn">Cancel</button>
                 <button class="confirm-btn">Delete</button>
@@ -351,43 +364,133 @@ function showDeleteConfirmation(taskId, taskTitle, taskItem, actionButtons) {
     // Add modal to body
     document.body.appendChild(modal);
     
-    // Add event listeners
+    // Get elements
     const cancelBtn = modal.querySelector('.cancel-btn');
     const confirmBtn = modal.querySelector('.confirm-btn');
+    const statusMessage = modal.querySelector('.status-message');
+    
+    // Function to close the modal
+    const closeModal = () => {
+        // Remove the modal with a fade-out effect
+        modal.classList.add('fade-out');
+        
+        // Remove keyboard event listener
+        document.removeEventListener('keydown', handleKeyDown);
+        
+        // Wait for animation to complete before removing from DOM
+        setTimeout(() => {
+            modal.remove();
+            
+            // Return focus to the element that had it before
+            if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+                previouslyFocusedElement.focus();
+            }
+        }, 200);
+    };
+    
+    // Handle keyboard events
+    const handleKeyDown = (e) => {
+        if (e.key === 'Escape') {
+            // ESC key closes the modal
+            closeModal();
+            actionButtons.style.display = 'none';
+        } else if (e.key === 'Enter' && document.activeElement === confirmBtn) {
+            // Enter key on confirm button triggers delete
+            confirmBtn.click();
+        }
+    };
+    
+    // Add keyboard event listener
+    document.addEventListener('keydown', handleKeyDown);
     
     // Cancel button closes the modal
     cancelBtn.addEventListener('click', function() {
-        modal.remove();
+        closeModal();
         actionButtons.style.display = 'none';
     });
     
-    // Confirm button deletes the task
+
     confirmBtn.addEventListener('click', function() {
+        confirmBtn.textContent = 'Deleted';
+        confirmBtn.disabled = true;
+        cancelBtn.disabled = true;
+        
         // Delete from database
-        deleteTask(taskId);
-        
-        // Remove task from DOM
-        taskItem.remove();
-        
-        // Remove modal
-        modal.remove();
+        fetch('api/delete_task.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                task_id: taskId
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                statusMessage.textContent = 'Task deleted successfully!';
+                statusMessage.style.display = 'block';
+                statusMessage.style.backgroundColor = '#d4edda';
+                statusMessage.style.color = '#155724';
+                
+                // Add fade-out animation to the task item
+                taskItem.style.transition = 'opacity 0.3s, transform 0.3s';
+                taskItem.style.opacity = '0';
+                taskItem.style.transform = 'translateX(20px)';
+                
+                // Wait for animation to complete before removing from DOM
+                setTimeout(() => {
+                    taskItem.remove();
+                    
+                    // Update counters
+                    updateCounters();
+                    
+                    // Close modal after a short delay
+                    setTimeout(closeModal, 500);
+                }, 300);
+            } else {
+                // Show error message in the modal
+                statusMessage.textContent = 'Error: ' + data.message;
+                statusMessage.style.display = 'block';
+                statusMessage.style.backgroundColor = '#f8d7da';
+                statusMessage.style.color = '#721c24';
+                
+                // Re-enable buttons
+                confirmBtn.textContent = 'Delete';
+                confirmBtn.disabled = false;
+                cancelBtn.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            
+            // Show error message in the modal
+            statusMessage.textContent = 'An error occurred. Please try again.';
+            statusMessage.style.display = 'block';
+            statusMessage.style.backgroundColor = '#f8d7da';
+            statusMessage.style.color = '#721c24';
+            
+            // Re-enable buttons
+            confirmBtn.textContent = 'Delete';
+            confirmBtn.disabled = false;
+            cancelBtn.disabled = false;
+        });
     });
     
-    // Clicking outside the modal content closes it
+
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
-            modal.remove();
+            closeModal();
             actionButtons.style.display = 'none';
         }
     });
+    
+    cancelBtn.focus();
 }
-
-
-
-
-
-
-
-
-
 
