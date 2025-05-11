@@ -1,7 +1,7 @@
 <?php
-// Clear PHP's file status cache to ensure fresh CSS loading
-clearstatcache();
+    clearstatcache();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

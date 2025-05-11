@@ -1,17 +1,66 @@
 <?php
-require_once '../authentication/SessionManager.php';
-SessionManager::startSession();
-// Clear PHP's file status cache to ensure fresh CSS loading
-clearstatcache();
+    require_once '../authentication/SessionManager.php';
+    require_once '../authentication/DatabaseManager.php'; // Changed from Database.php
+    SessionManager::startSession();
+    // Clear PHP's file status cache to ensure fresh CSS loading
+    clearstatcache();
 
-// Redirect if not logged in
-if (!SessionManager::isLoggedIn()) {
-    header("Location: login.php");
-    exit();
-}
+    // Redirect if not logged in
+    if (!SessionManager::isLoggedIn()) {
+        header("Location: login.php");
+        exit();
+    }
 
-// Get user information
-$user_name = $_SESSION['user_name'];
+    // Get user information
+    $user_name = $_SESSION['user_name'];
+    $user_id = $_SESSION['user_id'];
+
+    // Get task counts
+    function getTaskCounts($user_id) {
+        $db = new DatabaseManager(); // Changed from Database
+        $conn = $db->getConnection();
+        
+        // Total tasks
+        $totalQuery = "SELECT COUNT(*) as total FROM tasks WHERE user_id = ?";
+        $stmt = $conn->prepare($totalQuery);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $totalResult = $stmt->get_result()->fetch_assoc();
+        $total = $totalResult['total'];
+        
+        // Work tasks
+        $workQuery = "SELECT COUNT(*) as work FROM tasks WHERE user_id = ? AND category = 'work'";
+        $stmt = $conn->prepare($workQuery);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $workResult = $stmt->get_result()->fetch_assoc();
+        $work = $workResult['work'];
+        
+        // School tasks
+        $schoolQuery = "SELECT COUNT(*) as school FROM tasks WHERE user_id = ? AND category = 'school'";
+        $stmt = $conn->prepare($schoolQuery);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $schoolResult = $stmt->get_result()->fetch_assoc();
+        $school = $schoolResult['school'];
+        
+        // Personal tasks
+        $personalQuery = "SELECT COUNT(*) as personal FROM tasks WHERE user_id = ? AND category = 'personal'";
+        $stmt = $conn->prepare($personalQuery);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $personalResult = $stmt->get_result()->fetch_assoc();
+        $personal = $personalResult['personal'];
+        
+        return [
+            'total' => $total,
+            'work' => $work,
+            'school' => $school,
+            'personal' => $personal
+        ];
+    }
+
+    $taskCounts = getTaskCounts($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,16 +83,28 @@ $user_name = $_SESSION['user_name'];
         <section class="body-section">
             <nav class="horizontal-nav">
                 <ul>
-                    <li>Welcome, <?php echo htmlspecialchars($user_name); ?>!</li>
-                    <li><a href="auth/logout.php">Logout</a></li>
+                    <li><h1><?php echo htmlspecialchars($user_name); ?></h1></li>
+                    <li><a href="auth/logout.php"><button>Logout</button></a></li>
                 </ul>
             </nav>
 
             <div class="dashboard">
-                <div class="counter-card-1">Counter Card 1</div>
-                <div class="counter-card-2">Counter Card 2</div>
-                <div class="counter-card-3">Counter Card 3</div>
-                <div class="counter-card-4">Counter Card 4</div>
+                <div class="counter-card-1">
+                    <h3>Total Tasks</h3>
+                    <p class="counter"><?php echo $taskCounts['total']; ?></p>
+                </div>
+                <div class="counter-card-2">
+                    <h3>Work Tasks</h3>
+                    <p class="counter"><?php echo $taskCounts['work']; ?></p>
+                </div>
+                <div class="counter-card-3">
+                    <h3>School Tasks</h3>
+                    <p class="counter"><?php echo $taskCounts['school']; ?></p>
+                </div>
+                <div class="counter-card-4">
+                    <h3>Personal Tasks</h3>
+                    <p class="counter"><?php echo $taskCounts['personal']; ?></p>
+                </div>
                 <div class="task-container">
                     <div class="task-container-head">
                         <div class="head-north">
@@ -66,7 +127,7 @@ $user_name = $_SESSION['user_name'];
         </section>
     </main>
 
-    <!-- Include the external JavaScript file -->
     <script src="assets/js/task-manager.js"></script>
 </body>
 </html>
+
