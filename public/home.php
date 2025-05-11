@@ -1,9 +1,24 @@
+<?php
+require_once '../authentication/SessionManager.php';
+SessionManager::startSession();
+// Clear PHP's file status cache to ensure fresh CSS loading
+clearstatcache();
+
+// Redirect if not logged in
+if (!SessionManager::isLoggedIn()) {
+    header("Location: login.php");
+    exit();
+}
+
+// Get user information
+$user_name = $_SESSION['user_name'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="stylesheet" href="assets/css/home.css?v=<?php echo time(); ?>">
     <title>Duets - Dashboard</title>
 </head>
 <body>
@@ -19,7 +34,8 @@
         <section class="body-section">
             <nav class="horizontal-nav">
                 <ul>
-                    <li>Welcome, User!</li>
+                    <li>Welcome, <?php echo htmlspecialchars($user_name); ?>!</li>
+                    <li><a href="auth/logout.php">Logout</a></li>
                 </ul>
             </nav>
 

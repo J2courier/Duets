@@ -1,0 +1,3 @@
+DB name Duets
+tables
+- users (id primary key, name, email unique, password, created at, updated at)
