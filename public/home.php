@@ -68,6 +68,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/home.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
     <title>Duets - Dashboard</title>
 </head>
 <body>
@@ -118,12 +119,21 @@
                         
                     </div>
                 </div>
-                <div class="progress-container">Progress Container</div>
+                <div class="progress-container">
+                    <h1>Progress Container</h1>
+                    <div class="progress-container-body">
+                        
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- Include the progress tracker script before the task manager -->
+    <script src="assets/js/progress-tracker.js"></script>
     <script src="assets/js/task-manager.js"></script>
+    <script src="assets/js/task-description.js"></script>
+
 </body>
 </html>
 

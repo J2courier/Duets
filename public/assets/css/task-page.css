@@ -200,8 +200,20 @@
     color: #4CAF50;
 }
 
-.action-buttons .delete-btn {
-    color: #EA4335;
+/* Keep the complete button styling for the task page since it still has the complete functionality */
+.action-buttons .complete-btn {
+    color: #4CAF50;
+}
+
+/* Keep task-card.completed styling for tasks that are already marked as completed */
+.task-card.completed {
+    background-color: #f8f8f8;
+    opacity: 0.8;
+}
+
+.task-card.completed .task-title {
+    text-decoration: line-through;
+    color: #888;
 }
 
 /* Task form styling */
@@ -450,24 +462,21 @@
     background-color: #1e4e8c;
 }
 
-/* Animation for updated task */
-@keyframes highlight-update {
-    0% {
-        background-color: rgba(255, 255, 0, 0.3);
-        transform: scale(1);
-    }
-    50% {
-        background-color: rgba(255, 255, 0, 0.5);
-        transform: scale(1.02);
-    }
-    100% {
-        background-color: transparent;
-        transform: scale(1);
-    }
-}
-
+/* Add animation for updated tasks */
 .task-updated {
     animation: highlight-update 1.5s ease;
+}
+
+@keyframes highlight-update {
+    0% {
+        box-shadow: 0 0 0 2px rgba(3, 33, 168, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(3, 33, 168, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 0 2px rgba(3, 33, 168, 0);
+    }
 }
 
 /* Animation for deleted task */
@@ -508,6 +517,8 @@
         height: 170px; /* Slightly taller on mobile */
     }
 }
+
+
 
 
 

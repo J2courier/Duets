@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get category color
         const categoryColor = getCategoryColor(task.category);
         
-        // Create task item HTML
+        // Create task item HTML - removed task-item-footer and more button
         taskItem.innerHTML = `
             <div class="task-item-header">
                 <span class="task-type">${task.type}</span>
@@ -130,66 +130,18 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="task-item-body">
                 <h4>${task.title}</h4>
             </div>
-            <div class="task-item-footer">
-                <button class="more-btn"><img src="assets/images/moreIconBlack.png" alt="More"></button>
-                <div class="action-buttons" style="display: none;">
-                    <button class="complete-btn">${task.completed == 1 ? 'Uncomplete' : 'Complete'}</button>
-                    <button class="delete-btn">Delete</button>
-                </div>
-            </div>
         `;
         
-        // Add event listener for more button
-        const moreBtn = taskItem.querySelector('.more-btn');
-        const actionButtons = taskItem.querySelector('.action-buttons');
-        
-        moreBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            // Toggle visibility of action buttons
-            const isVisible = actionButtons.style.display === 'flex';
-            
-            // Hide all other action buttons first
-            document.querySelectorAll('.action-buttons').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            // Toggle this item's action buttons
-            actionButtons.style.display = isVisible ? 'none' : 'flex';
-        });
-        
-        // Add event listeners for complete and delete buttons
-        const completeBtn = taskItem.querySelector('.complete-btn');
-        completeBtn.addEventListener('click', function() {
+        // Add click event to toggle completion status
+        taskItem.addEventListener('click', function() {
             const taskId = taskItem.dataset.taskId;
             const isCompleted = taskItem.classList.contains('completed');
             
             // Toggle completed class
             taskItem.classList.toggle('completed');
             
-            // Update button text
-            completeBtn.textContent = isCompleted ? 'Complete' : 'Uncomplete';
-            
             // Update in database
             updateTaskStatus(taskId, !isCompleted);
-            
-            // Hide action buttons
-            actionButtons.style.display = 'none';
-        });
-        
-        const deleteBtn = taskItem.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', function() {
-            const taskId = taskItem.dataset.taskId;
-            const taskTitle = taskItem.querySelector('.task-item-body h4').textContent;
-            
-            // Show custom confirmation dialog
-            showDeleteConfirmation(taskId, taskTitle, taskItem, actionButtons);
-        });
-        
-        // Close action buttons when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!taskItem.contains(event.target)) {
-                actionButtons.style.display = 'none';
-            }
         });
         
         // Insert task item at the top of the container
@@ -493,4 +445,3 @@ function showDeleteConfirmation(taskId, taskTitle, taskItem, actionButtons) {
     
     cancelBtn.focus();
 }
-

@@ -11,11 +11,10 @@ if (!SessionManager::isLoggedIn()) {
 
 $user_id = $_SESSION['user_id'];
 
-// Check if task_id is provided
+
 if (isset($_GET['task_id'])) {
     $task_id = $_GET['task_id'];
     
-    // Create database connection
     $db = new DatabaseManager();
     $conn = $db->getConnection();
     

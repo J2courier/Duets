@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="assets/css/home.css?v=<?php echo time(); ?>">
     <!-- Include the task page specific CSS -->
     <link rel="stylesheet" href="assets/css/task-page.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
     <title>Tasks</title>
 </head>
 <body>
@@ -57,5 +58,6 @@
     
     <!-- Use the dedicated task page JavaScript file -->
     <script src="assets/js/task-page.js?v=<?php echo time(); ?>"></script>
+    <script src="assets/js/task-description.js"></script>
 </body>
 </html>

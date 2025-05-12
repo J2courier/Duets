@@ -8,7 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentFilter = 'all';
     
     // Load tasks when page loads
-    loadTasks();
+    loadTasks().then(() => {
+        // Initialize description handlers after tasks are loaded
+        if (window.initTaskDescriptionHandlers) {
+            window.initTaskDescriptionHandlers();
+        }
+    });
     
     // Filter buttons event listeners
     filterButtons.forEach(button => {
@@ -100,37 +105,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to load tasks from database
     function loadTasks() {
-        fetch('api/get_tasks.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Clear existing tasks
-                taskContainerBody.innerHTML = '';
-                
-                // Filter tasks if needed
-                let filteredTasks = data.tasks;
-                if (currentFilter !== 'all') {
-                    filteredTasks = data.tasks.filter(task => task.category === currentFilter);
-                }
-                
-                // Add tasks to container
-                if (filteredTasks.length === 0) {
-                    // Show no tasks message
-                    const noTasksMsg = document.createElement('div');
-                    noTasksMsg.className = 'no-tasks-message';
-                    noTasksMsg.textContent = 'No tasks found. Add a new task to get started!';
-                    taskContainerBody.appendChild(noTasksMsg);
-                } else {
-                    filteredTasks.forEach(task => {
+        return new Promise((resolve) => {
+            fetch('api/get_tasks.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Clear existing tasks
+                    const taskCards = document.querySelectorAll('.task-card');
+                    taskCards.forEach(card => card.remove());
+                    
+                    // Display tasks
+                    data.tasks.forEach(task => {
                         displayTaskCard(task);
                     });
+                    
+                    // Initialize description handlers
+                    if (window.initTaskDescriptionHandlers) {
+                        window.initTaskDescriptionHandlers();
+                    }
+                    
+                    resolve(); // Resolve the promise
+                } else {
+                    console.error('Error loading tasks:', data.message);
+                    resolve(); // Resolve even on error
                 }
-            } else {
-                console.error('Error loading tasks:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resolve(); // Resolve even on error
+            });
         });
     }
     
@@ -138,13 +141,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayTaskCard(task) {
         // Create task card
         const taskCard = document.createElement('div');
-        taskCard.className = `task-card ${task.category}`;
+        taskCard.className = 'task-card';
         if (task.completed == 1) {
             taskCard.classList.add('completed');
         }
         
-        // Store task ID as data attribute
+        // Store task ID and other data as attributes
         taskCard.dataset.taskId = task.id;
+        taskCard.dataset.category = task.category;
+        taskCard.dataset.type = task.type;
+        taskCard.dataset.description = task.description || '';
         
         // Get category color
         const categoryColor = getCategoryColor(task.category);
@@ -168,71 +174,18 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         
-        // Add event listener for more button
-        const moreBtn = taskCard.querySelector('.more-btn');
-        const actionButtons = taskCard.querySelector('.action-buttons');
-        
-        moreBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            // Toggle visibility of action buttons
-            const isVisible = actionButtons.style.display === 'flex';
-            
-            // Hide all other action buttons first
-            document.querySelectorAll('.action-buttons').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            // Toggle this item's action buttons
-            actionButtons.style.display = isVisible ? 'none' : 'flex';
-        });
-        
-        // Add event listeners for edit, complete and delete buttons
-        const editBtn = taskCard.querySelector('.edit-btn');
-        editBtn.addEventListener('click', function() {
-            const taskId = taskCard.dataset.taskId;
-            const taskTitle = taskCard.querySelector('.task-title').textContent;
-            const taskType = taskCard.querySelector('.task-type').textContent;
-            
-            // Show edit dialog
-            showEditDialog(taskId, taskTitle, taskType, task.category);
-            
-            // Hide action buttons
-            actionButtons.style.display = 'none';
-        });
-        
-        const completeBtn = taskCard.querySelector('.complete-btn');
-        completeBtn.addEventListener('click', function() {
-            const taskId = taskCard.dataset.taskId;
-            const isCompleted = taskCard.classList.contains('completed');
-            
-            // Toggle completed class
-            taskCard.classList.toggle('completed');
-            
-            // Update button text
-            completeBtn.textContent = isCompleted ? 'Complete' : 'Uncomplete';
-            
-            // Update in database
-            updateTaskStatus(taskId, !isCompleted);
-            
-            // Hide action buttons
-            actionButtons.style.display = 'none';
-        });
-        
-        const deleteBtn = taskCard.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', function() {
-            const taskId = taskCard.dataset.taskId;
-            const taskTitle = taskCard.querySelector('.task-title').textContent;
-            
-            // Show custom confirmation dialog
-            showDeleteConfirmation(taskId, taskTitle, taskCard, actionButtons);
-        });
-        
-        // Close action buttons when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!taskCard.contains(event.target)) {
-                actionButtons.style.display = 'none';
+        // Add click event to show description dialog
+        taskCard.addEventListener('click', function(e) {
+            // Don't show description dialog if clicking on buttons
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('.action-buttons')) {
+                return;
             }
+            
+            showDescriptionDialog(task.id, task.title, task.description || '', taskCard);
         });
+        
+        // Add event listeners for buttons
+        attachTaskCardEventListeners(taskCard, task);
         
         // Add task card to container
         taskContainerBody.appendChild(taskCard);
@@ -310,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to update task status in database
-    function updateTaskStatus(taskId, completed) {
+    function updateTaskStatus(taskId, completed, category) {
         fetch('api/update_task_status.php', {
             method: 'POST',
             headers: {
@@ -325,13 +278,41 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 console.log('Task status updated successfully');
+                
+                // Update progress bars immediately if ProgressTracker is available
+                if (window.ProgressTracker) {
+                    window.ProgressTracker.updateProgressBars(true, category);
+                }
             } else {
                 console.error('Error updating task status:', data.message);
+                // Revert UI changes if server update failed
+                revertTaskStatus(taskId, completed);
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            // Revert UI changes if there was an error
+            revertTaskStatus(taskId, completed);
         });
+    }
+
+    // Function to revert task status UI if server update fails
+    function revertTaskStatus(taskId, wasCompleted) {
+        const taskCard = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+        if (taskCard) {
+            // Revert the completed class
+            if (wasCompleted) {
+                taskCard.classList.add('completed');
+            } else {
+                taskCard.classList.remove('completed');
+            }
+            
+            // Revert button text
+            const completeBtn = taskCard.querySelector('.complete-btn');
+            if (completeBtn) {
+                completeBtn.textContent = wasCompleted ? 'Uncomplete' : 'Complete';
+            }
+        }
     }
     
     // Event listeners for add buttons
@@ -622,60 +603,27 @@ function showEditDialog(taskId, currentTitle, currentType, currentCategory) {
             updateStatus.style.backgroundColor = '#f8f9fa';
             updateStatus.style.color = '#333';
             
-            // Update task in database
-            fetch('api/update_task.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    task_id: taskId,
-                    title: newTitle,
-                    type: newType,
-                    category: newCategory
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
+            // Use the standardized updateTask function
+            updateTask(taskId, newTitle, newType, newCategory)
+                .then(() => {
                     // Show success message
                     updateStatus.textContent = 'Task updated successfully!';
                     updateStatus.style.backgroundColor = '#d4edda';
                     updateStatus.style.color = '#155724';
                     
-                    // Fetch the updated task
-                    fetchSingleTask(taskId);
-                    
                     // Close dialog after a short delay
                     setTimeout(closeDialog, 1000);
-                } else {
+                })
+                .catch(errorMsg => {
                     // Show error message
-                    updateStatus.textContent = 'Error: ' + data.message;
+                    updateStatus.textContent = 'Error: ' + errorMsg;
                     updateStatus.style.backgroundColor = '#f8d7da';
                     updateStatus.style.color = '#721c24';
                     
                     // Re-enable save button
                     saveBtn.disabled = false;
                     saveBtn.textContent = 'Save Changes';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                
-                // Show error message
-                updateStatus.textContent = 'An error occurred. Please try again.';
-                updateStatus.style.backgroundColor = '#f8d7da';
-                updateStatus.style.color = '#721c24';
-                
-                // Re-enable save button
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'Save Changes';
-            });
+                });
         }
     });
     
@@ -719,12 +667,14 @@ function updateTask(taskId, title, type, category) {
             fetchSingleTask(taskId);
         } else {
             console.error('Error updating task:', data.message);
-            alert('Failed to update task: ' + data.message);
+            // Return the error so it can be handled by the caller
+            return Promise.reject(data.message);
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while updating the task. Please try again.');
+        // Return the error so it can be handled by the caller
+        return Promise.reject(error.message || 'An error occurred while updating the task');
     });
 }
 
@@ -826,15 +776,16 @@ function attachTaskCardEventListeners(taskCard, task) {
     completeBtn.addEventListener('click', function() {
         const taskId = taskCard.dataset.taskId;
         const isCompleted = taskCard.classList.contains('completed');
+        const category = task.category; // Use the task object to get the category
         
-        // Toggle completed class
+        // Toggle completed class immediately
         taskCard.classList.toggle('completed');
         
         // Update button text
         completeBtn.textContent = isCompleted ? 'Complete' : 'Uncomplete';
         
         // Update in database
-        updateTaskStatus(taskId, !isCompleted);
+        updateTaskStatus(taskId, !isCompleted, category);
         
         // Hide action buttons
         actionButtons.style.display = 'none';
@@ -856,6 +807,12 @@ function attachTaskCardEventListeners(taskCard, task) {
         }
     });
 }
+
+
+
+
+
+
 
 
 
