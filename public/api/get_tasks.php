@@ -15,7 +15,7 @@ $user_id = $_SESSION['user_id'];
 $db = new DatabaseManager();
 $conn = $db->getConnection();
 
-$query = "SELECT id, title, category, type, completed FROM tasks WHERE user_id = ? ORDER BY created_at DESC";
+$query = "SELECT id, title, category, type, completed, description, due_date, repeat_type, repeat_days FROM tasks WHERE user_id = ? ORDER BY created_at DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();

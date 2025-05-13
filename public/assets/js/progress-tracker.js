@@ -127,6 +127,68 @@ function updateProgressBars(animate = false, updatedCategory = null) {
                     progressContainerBody.appendChild(progressSection);
                 }
             });
+
+            // Add daily tasks progress section if it exists in the data
+            if (data.progress.daily) {
+                const dailyStats = data.progress.daily;
+                const dailyPercentage = dailyStats.total > 0 ? Math.round((dailyStats.completed / dailyStats.total) * 100) : 0;
+                const hasIncompleteDailyTasks = dailyStats.completed < dailyStats.total && dailyStats.total > 0;
+                
+                // Check if section already exists
+                const existingDailySection = progressContainerBody.querySelector('.progress-section.daily-tasks');
+                
+                if (existingDailySection) {
+                    // Update existing section
+                    const progressHeader = existingDailySection.querySelector('.progress-header');
+                    progressHeader.innerHTML = `
+                        <h3>Daily Tasks</h3>
+                        <span class="progress-count">${dailyPercentage}%</span>
+                    `;
+                    
+                    const progressBar = existingDailySection.querySelector('.progress-bar');
+                    progressBar.style.width = `${dailyPercentage}%`;
+                    
+                    // Update classes based on completion status
+                    if (hasIncompleteDailyTasks) {
+                        existingDailySection.classList.add('has-incomplete');
+                    } else {
+                        existingDailySection.classList.remove('has-incomplete');
+                    }
+                    
+                    // Highlight if this is the updated category
+                    if (animate && updatedCategory === 'daily') {
+                        existingDailySection.classList.add('highlight');
+                        setTimeout(() => {
+                            existingDailySection.classList.remove('highlight');
+                        }, 1500);
+                    }
+                } else {
+                    // Create new section for daily tasks
+                    const dailySection = document.createElement('div');
+                    dailySection.className = 'progress-section daily-tasks';
+                    if (hasIncompleteDailyTasks) {
+                        dailySection.classList.add('has-incomplete');
+                    }
+                    
+                    dailySection.innerHTML = `
+                        <div class="progress-header">
+                            <h3>Daily Tasks</h3>
+                            <span class="progress-count">${dailyPercentage}%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${dailyPercentage}%;"></div>
+                        </div>
+                    `;
+                    
+                    // Insert after the overall section
+                    const overallSection = progressContainerBody.querySelector('.progress-section.overall');
+                    if (overallSection) {
+                        overallSection.after(dailySection);
+                    } else {
+                        progressContainerBody.appendChild(dailySection);
+                    }
+                }
+            }
         } else {
             console.error('Error loading progress data:', data.message);
             showProgressError();
@@ -197,6 +259,7 @@ window.ProgressTracker = {
         }
     }
 };
+
 
 
 

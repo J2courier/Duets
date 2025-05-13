@@ -73,14 +73,6 @@
 </head>
 <body>
     <main>
-        <nav class="vertical-nav">
-            <ul>
-                <li><button><img src="assets/images/home.png" alt="img"></button></li>
-                <li><a href="task.php"><button><img src="assets/images/task.png" alt="img"></button></a></li>
-                <li><button><img src="assets/images/FlashcardIcon.png" alt="img"></button></li>
-                <li><button><img src="assets/images/settings.png" alt="img"></button></li>
-            </ul>
-        </nav>
         <section class="body-section">
             <nav class="horizontal-nav">
                 <ul>
@@ -110,13 +102,17 @@
                     <div class="task-container-head">
                         <div class="head-north">
                             <h1>Daily Task</h1>
-                            <button id="addTaskBtn">Add Task</button>
-                            <button id="addLessonBtn">Add Lesson</button>
+                            <div>
+                                <button id="addTaskBtn">Add Task</button>
+                                <button id="addLessonBtn">Add Lesson</button>
+                            </div>
                         </div>
-                        
+                        <div class="categories">
+                            <!-- Category filter buttons will be added here by JavaScript -->
+                        </div>
                     </div>
                     <div class="task-container-body">
-                        
+                        <!-- Task items will be added here -->
                     </div>
                 </div>
                 <div class="progress-container">
@@ -128,11 +124,9 @@
             </div>
         </section>
     </main>
-
-    <!-- Include the progress tracker script before the task manager -->
-    <script src="assets/js/progress-tracker.js"></script>
-    <script src="assets/js/task-manager.js"></script>
-    <script src="assets/js/task-description.js"></script>
+    <script src="assets/js/progress-tracker.js?v=<?php echo time(); ?>"></script>
+    <script src="assets/js/task-description.js?v=<?php echo time(); ?>"></script>
+    <script src="assets/js/task-manager.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

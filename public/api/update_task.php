@@ -1,75 +1,65 @@
 <?php
-// Include database connection
-require_once '../../config/database.php';
+require_once '../../authentication/SessionManager.php';
+require_once '../../authentication/DatabaseManager.php';
 
-// Set content type to JSON
-header('Content-Type: application/json');
+SessionManager::startSession();
 
-// Check if request method is POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
-    exit;
+if (!SessionManager::isLoggedIn()) {
+    echo json_encode(['success' => false, 'message' => 'Not logged in']);
+    exit();
 }
 
-// Get JSON data from request body
-$json_data = file_get_contents('php://input');
-$data = json_decode($json_data, true);
-
-// Check if required fields are present
-if (!isset($data['task_id']) || !isset($data['title']) || !isset($data['type']) || !isset($data['category'])) {
-    echo json_encode(['success' => false, 'message' => 'Missing required fields']);
-    exit;
-}
-
-// Sanitize inputs
-$task_id = filter_var($data['task_id'], FILTER_SANITIZE_NUMBER_INT);
-$title = filter_var($data['title'], FILTER_SANITIZE_STRING);
-$type = filter_var($data['type'], FILTER_SANITIZE_STRING);
-$category = filter_var($data['category'], FILTER_SANITIZE_STRING);
-
-// Validate inputs
-if (empty($title) || empty($type) || empty($category)) {
-    echo json_encode(['success' => false, 'message' => 'All fields are required']);
-    exit;
-}
-
-// Validate category
-$valid_categories = ['work', 'school', 'personal'];
-if (!in_array($category, $valid_categories)) {
-    echo json_encode(['success' => false, 'message' => 'Invalid category']);
-    exit;
-}
-
-// Validate type
-$valid_types = ['Task', 'Lesson'];
-if (!in_array($type, $valid_types)) {
-    echo json_encode(['success' => false, 'message' => 'Invalid type']);
-    exit;
-}
-
-try {
-    // Prepare SQL statement
-    $stmt = $pdo->prepare("UPDATE tasks SET title = :title, type = :type, category = :category, updated_at = NOW() WHERE id = :task_id");
+// Check if request is POST and contains JSON
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && 
+    isset($_SERVER['CONTENT_TYPE']) && 
+    strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
     
-    // Bind parameters
-    $stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
-    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-    $stmt->bindParam(':type', $type, PDO::PARAM_STR);
-    $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+    // Get JSON data
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
     
-    // Execute statement
-    $stmt->execute();
+    // Validate data
+    if (!isset($data['task_id']) || !isset($data['title']) || !isset($data['category'])) {
+        echo json_encode(['success' => false, 'message' => 'Missing required fields']);
+        exit();
+    }
     
-    // Check if task was updated
-    if ($stmt->rowCount() > 0) {
+    $task_id = $data['task_id'];
+    $title = trim($data['title']);
+    $category = $data['category'];
+    $user_id = $_SESSION['user_id'];
+    
+    // Validate title
+    if (empty($title)) {
+        echo json_encode(['success' => false, 'message' => 'Title cannot be empty']);
+        exit();
+    }
+    
+    // Validate category
+    $valid_categories = ['work', 'school', 'personal'];
+    if (!in_array($category, $valid_categories)) {
+        echo json_encode(['success' => false, 'message' => 'Invalid category']);
+        exit();
+    }
+    
+    // Update in database
+    $db = new DatabaseManager();
+    $conn = $db->getConnection();
+    
+    // Make sure the task belongs to the current user (security check)
+    $query = "UPDATE tasks SET title = ?, category = ? WHERE id = ? AND user_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ssii", $title, $category, $task_id, $user_id);
+    
+    if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => 'Task updated successfully']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Task not found or no changes made']);
+        echo json_encode(['success' => false, 'message' => 'Error updating task: ' . $conn->error]);
     }
-} catch (PDOException $e) {
-    // Log error and return error message
-    error_log('Database error: ' . $e->getMessage());
-    echo json_encode(['success' => false, 'message' => 'Database error occurred']);
+    
+    $stmt->close();
+    $conn->close();
 }
 ?>
+
 
