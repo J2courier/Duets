@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Get POST data
 $data = json_decode(file_get_contents('php://input'), true);
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];    
 
 // Check if required fields are present
 if (!isset($data['title']) || !isset($data['category']) || !isset($data['type'])) {
@@ -46,7 +46,6 @@ try {
     $stmt = $conn->prepare($query);
     $stmt->bind_param("isssssss", $user_id, $title, $category, $type, $description, $due_date, $repeat_type, $repeat_days);
     
-    // Execute statement
     if ($stmt->execute()) {
         $task_id = $stmt->insert_id;
         echo json_encode(['success' => true, 'message' => 'Task created successfully', 'task_id' => $task_id]);
@@ -54,7 +53,6 @@ try {
         echo json_encode(['success' => false, 'message' => 'Failed to create task']);
     }
     
-    // Close statement and connection
     $stmt->close();
     $conn->close();
 } catch (Exception $e) {

@@ -107,10 +107,10 @@ button {
 }
 
 .counter-card-1, .counter-card-2, .counter-card-3, .counter-card-4 {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(27, 27, 27, 0.247);
     border-radius: 5px;
     padding: 15px;
-    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1); */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -139,7 +139,8 @@ button {
 }
 
 .task-container, .progress-container {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(27, 27, 27, 0.247);
+    /* box-shadow: 0 0px 5px rgba(156, 156, 156, 0.568); */
     border-radius: 3px;
     padding: 15px;
     background-color: white;
@@ -211,6 +212,7 @@ button {
 
 .progress-container {
     grid-area: progress;
+    
 }
 
 @media (max-width: 768px) {
@@ -566,7 +568,7 @@ button {
     padding: 30px;
     background-color: white;
     border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(27, 27, 27, 0.247);
 }
 
 .progress-container h1 {
@@ -1003,4 +1005,86 @@ button {
 .task-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 992px) {
+    /* Tablet View */
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "card1 card2"
+            "card3 card4"
+            "tasks tasks"
+            "progress progress";
+        gap: 15px;
+    }
+    
+    .counter-card-1, .counter-card-2, .counter-card-3, .counter-card-4 {
+        padding: 10px;
+    }
+    
+    .counter {
+        font-size: 2rem;
+    }
+    
+    .horizontal-nav ul li h1 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Mobile View */
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "card1"
+            "card2"
+            "card3"
+            "card4"
+            "tasks"
+            "progress";
+        padding: 0 10px 10px 10px;
+    }
+    
+    .horizontal-nav {
+        padding: 10px;
+    }
+    
+    .horizontal-nav ul li h1 {
+        font-size: 1rem;
+    }
+    
+    .horizontal-nav ul li button {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .task-container-head .head-north {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .head-north div {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .head-north div button {
+        flex: 1;
+        font-size: 0.9rem;
+    }
+    
+    .categories {
+        padding: 5px 0;
+    }
+    
+    .category-filter-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
 }

@@ -9,7 +9,6 @@
         exit();
     }
 
-    // Get POST data
     $data = json_decode(file_get_contents('php://input'), true);
     $user_id = $_SESSION['user_id'];
     $title = $data['title'];

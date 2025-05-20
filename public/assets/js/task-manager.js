@@ -1,3 +1,19 @@
+// Move updateCounters function outside the DOMContentLoaded event
+// to make it globally accessible
+function updateCounters() {
+    fetch('api/get_task_counts.php')
+    .then(response => response.json())
+    .then(data => {
+        document.querySelector('.counter-card-1 .counter').textContent = data.total;
+        document.querySelector('.counter-card-2 .counter').textContent = data.work;
+        document.querySelector('.counter-card-3 .counter').textContent = data.school;
+        document.querySelector('.counter-card-4 .counter').textContent = data.personal;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const addTaskBtn = document.getElementById('addTaskBtn');
     const addLessonBtn = document.getElementById('addLessonBtn');
@@ -608,21 +624,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Function to update counters
-    function updateCounters() {
-        fetch('api/get_task_counts.php')
-        .then(response => response.json())
-        .then(data => {
-            document.querySelector('.counter-card-1 .counter').textContent = data.total;
-            document.querySelector('.counter-card-2 .counter').textContent = data.work;
-            document.querySelector('.counter-card-3 .counter').textContent = data.school;
-            document.querySelector('.counter-card-4 .counter').textContent = data.personal;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-    
     // Event listeners for add buttons
     addTaskBtn.addEventListener('click', function() {
         createForm('Task');
@@ -849,6 +850,7 @@ function getRepeatDescription(repeatType, repeatDays) {
             return '';
     }
 }
+
 
 
 

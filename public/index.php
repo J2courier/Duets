@@ -55,8 +55,14 @@ clearstatcache();
                     </li>
                     <li> 
                         <div class="vince">
-                            <img src="assets/images/vince.jpg" alt="">
+                            <img src="assets/images/vince.jpg" alt="img">
                             <h3>Vince Gabriel Cartujano</h3>
+                        </div>
+                    </li>
+                    <li> 
+                        <div class="james">
+                            <img src="assets/images/james.jpg" alt="img">
+                            <h3>James Paulo Dela Cruz</h3>
                         </div>
                     </li>
                 </ul>
