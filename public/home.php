@@ -125,7 +125,7 @@
         </section>
     </main>
     <script src="assets/js/progress-tracker.js?v=<?php echo time(); ?>"></script>
-    <script src="assets/js/task-description.js?v=<?php echo time(); ?>"></script>
+    <script src="assets/js/task-description.js?v=<?php echo time(); ?>"></script>   
     <script src="assets/js/task-manager.js?v=<?php echo time(); ?>"></script>
 
 </body>

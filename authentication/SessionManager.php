@@ -52,9 +52,8 @@ class SessionManager {
         return true;
     }
     
-    // Destroy session on logout
+
     public static function destroySession() {
-        // Unset all session variables
         $_SESSION = array();
         
         if (ini_get("session.use_cookies")) {
@@ -65,11 +64,9 @@ class SessionManager {
             );
         }
         
-        // Finally, destroy the session
         session_destroy();
     }
     
-    // Redirect if not logged in
     public static function requireLogin() {
         self::startSession();
         if (!self::isLoggedIn()) {
@@ -87,7 +84,6 @@ class SessionManager {
         }
     }
 
-    // Initialize session with custom settings
     public static function initSession($options = []) {
         $default_options = [
             'lifetime' => 86400, 
@@ -100,7 +96,6 @@ class SessionManager {
         
         $session_options = array_merge($default_options, $options);
         
-        // Set session cookie parameters
         session_set_cookie_params(
             $session_options['lifetime'],
             $session_options['path'],

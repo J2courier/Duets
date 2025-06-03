@@ -13,13 +13,17 @@
 h1, h2, h3, h4, h5, h6 {
     letter-spacing: 1.5px;
 }
+a {
+    text-decoration: none;
+    color: black;
+}
 
 p, a, li, button {
     letter-spacing: 0.8px;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background-color: rgba(254, 254, 254, 0.938);
     display: flex;
     justify-content: center;
@@ -31,7 +35,7 @@ main {
     width: 80%;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 15%;
 }
 
 nav {
@@ -41,6 +45,8 @@ nav {
     height: 10%;
     width: 100%;
     padding: 20px;
+    background-color: #ffc548;
+    border-radius: 0px 0px 15px 15px;
 }
 
 nav ul {
@@ -54,10 +60,21 @@ nav ul {
 nav ul li {
     list-style: none;
 }
+nav ul li img {
+    width: 40px;
+    height: auto;
+    object-fit: contain;
+}
 
 nav ul li:first-child {
     font-weight: bold;
     font-size: 1.5rem;
+}
+nav ul li:first-child div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 nav ul li button {
@@ -85,44 +102,83 @@ nav ul li button:active {
 }
 
 .img-section {
-    /* border: solid 1px black; */
-    height: 50%;
-    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    /* gap: 20px; */
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 5%;
+    /* border: solid 1px blue; */
+}
+.hero {
+    display: flex;
+    /* border: solid 1px red; */
+    width: 100%;
+    margin-bottom: 8%;
 }
 .welcome-img {
-    /* border: solid 1px black; */
-    height: 100%;
-    width: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.welcome-img img {
-    height: 90%;
-    width: 90%;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
-}
-
-.welcome-img img:hover {
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
-}
-.welcome-txt {
     /* border: solid 1px black; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 60%;
+    width: 30%;
+    gap:5%;
+    padding: 10px;
 }
-.welcome-txt h1 {
-    letter-spacing: 3px;
-    font-size: 5rem;
+
+.img-container1 img{
+    width: 550px;
+    height: 550px;
+    /* border: solid 1px black; */
+    object-fit: contain;
+}
+
+.welcome-txt {
+    /* grid-area: welcome-txt; */
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    /* border: solid 1px black; */
+    padding: 20px;
+}
+
+.welcome-txt h3 {
+    margin-bottom: 10%;
+}
+
+.spacer-img {
+    grid-area: spacer-img;
+    width: 100%;
+}
+
+.spacer-img img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.welcome-txt h1 {
+    /* border: solid 1px black; */
+    padding: 5px;
+    letter-spacing: 1px;
+    font-size: 6.5em;
+    line-height: 1em;
+    /* text-align: justify; */
+    /* text-wrap: nowrap; */
+    
+}
+.welcome-txt h3 {
+    /* border: solid 1px black; */
+    padding: 5px;
+    letter-spacing: 3px;
+    font-size: 2.5em;
+    color: rgb(56, 56, 56);
+    /* text-align: justify; */
+    /* text-wrap: nowrap; */
+    
 }
 
 .welcome-txt button {
@@ -151,43 +207,81 @@ nav ul li button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.spacer-img {
+    width: 100%;
+    height: 100%;
+}
+
+.spacer-img img {
+    /* border: solid 1px black; */
+    /* height: 200px; */
+    width: 100%;
+    object-fit: contain;
+}
+
 .credit-section {
-    /* border: solid 1px rgb(0, 160, 189); */
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 40px;
     padding: 20px;
 }
 
-.credit-section h1, .subject-teacher h1 {
+.credit-section h1, .co-developers h1 {
     letter-spacing: 2px;
 }
 
-.member-list {
+.developers {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.member-list ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+.developers ul {
+    display: flex;
+    justify-content: center;
     width: 100%;
     padding: 0;
 }
 
-.member-list ul li {
+.developers ul li {
+    list-style: none;
+}
+
+.co-developers {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+}
+
+.developers-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.developers-list ul {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    /* gap: 20%; */
+}
+
+.developers-list ul li {
     list-style: none;
     display: flex;
     justify-content: center;
 }
 
-.Lords, .Jherson, .Japheth, .vince, .james, .teacher {
+.jayv, .teacher {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -197,29 +291,61 @@ nav ul li button:active {
     padding: 15px;
     border-radius: 5px;
     width: 100%;
-    max-width: 200px;
-    height: 230px; /* Fixed height for all member containers */
+    max-width: 300px;
+    height: auto;
+    color: rgb(88, 88, 102);
 }
 
-.Lords img, .Jherson img, .Japheth img, .vince img, .james img, .teacher img {
-    height: 150px;
-    width: 150px;
+ .jayv img, .teacher img {
+    height: 280px;
+    width: 280px;
     border-radius: 5px;
-    object-fit: cover; /* Changed from contain to cover */
-    aspect-ratio: 1 / 1; /* Ensures perfect square */
+    object-fit: cover;
+    aspect-ratio: 2 / 2;
+   
 }
 
-
-
-.subject-teacher {
-    /* border: solid 1px rgb(0, 160, 189); */
-    width: 100%;
+.creators h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+.acknowledgement-txt {
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
     padding: 15px;
+}
+
+.acknowledgement-txt p {
+    line-height: 1.6;
+    text-align: justify;
+    font-size: 1.2rem;
+    margin-bottom: 10%;
+}
+
+@media (max-width: 768px) {
+    .Lords, .Jherson, .teacher {
+        max-width: 250px;
+    }
+    
+    .Lords img, .Jherson img, .teacher img {
+        height: 150px;
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .Lords, .Jherson, .teacher {
+        max-width: 100%;
+    }
+    
+    .Lords img, .Jherson img, .teacher img {
+        height: 140px;
+        width: 140px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -272,11 +398,9 @@ nav ul li button:active {
 
 footer {
     width: 100%;
-    background-color: #ffffff00;
-    border-radius: 10px 10px 0 0 ;
-    border: solid 1px rgb(212, 231, 255);
+    background-color: #0321a8;
+    border-radius: 10px 10px 0 0;
     padding: 40px 20px 20px;
-    margin-top: 50px;
     letter-spacing: 0.5px;
     color: white;
 }
@@ -284,23 +408,55 @@ footer {
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+    gap: 30px;
 }
 
+.footer-about, .footer-contact, .footer-links {
+    padding: 0 15px;
+}
+
+.footer-about h3, .footer-contact h3, .footer-links h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.footer-about p {
+    line-height: 1.6;
+}
 
 .footer-contact p {
     margin-bottom: 8px;
 }
 
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 8px;
+}
+
+.footer-links ul li a {
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: #ccc;
+    text-decoration: underline;
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
-    /* border-top: 1px solid #ddd; */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 20px;
 }
 
-    .footer-bottom p {
-        color: #e6e6e6;
-    }
+.footer-bottom p {
+    color: #e6e6e6;
+}
 
 @media (max-width: 768px) {
     .footer-content {
@@ -312,14 +468,4 @@ footer {
     .footer-content {
         grid-template-columns: 1fr;
     }
-}
-
-/* Add filter shadow to all images */
-img {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    transition: filter 0.3s ease;
-}
-
-img:hover {
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
 }
