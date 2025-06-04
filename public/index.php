@@ -19,11 +19,15 @@ clearstatcache();
             <ul>
                 <li>
                     <div class="nav-name-logo">
+                        <img src="assets/images/Seal_of_Capiz.png" alt="logo">    
                         <h3>Duets</h3>
-                        <img src="assets/images/Seal_of_Capiz.png" alt="logo">
                     </div>
                 </li>
-                <li><a href="login.php"><button>Login</button></a></li>
+                <li>
+                    <div class="nav-double-btn">
+                        <a href="login.php"><button>Login</button></a>
+                    </div>
+                </li>
             </ul>
         </nav>
         <section class="img-section">
@@ -47,16 +51,18 @@ clearstatcache();
             </div>            
 
         </section>
-        <section class="credit-section">
+        <section class="credit-section">'
+            <img src="assets/images/sk_img.jpg" alt="img" class="sk-img">
             <div class="creators">
                 <h1>ACKNOWLEDGEMENT</h1>
             </div>
             <div class="acknowledgement-txt">
+                
                  <p>
                     This project was made possible through the initiative of 
                     <strong>HON. JAYV B. ASTORIAS, RCrim SK Chairman of Brgy. Sibaguan</strong>, 
                     whose dedication and passion laid the foundation for its creation and development,
-                    together with <strong><a href="https://www.facebook.com/johnmark.anoche">Mrs. John Mark Basa Anoche.</a> and Jherson Bartolay</strong>
+                    together with <strong><a href="https://www.facebook.com/johnmark.anoche">Mrs. John Mark Basa Anoche</a> and Jherson Bartolay</strong>.
                     Their commitment to innovation and excellence continues to inspire the team and 
                     drive the project forward. We extend our deepest gratitude for their leadership 
                     and the opportunity to bring this idea to life.
@@ -64,30 +70,28 @@ clearstatcache();
             </div>
                 <div class="developers-list">
                     <ul>
-                        <li>
-                            <div>
-                                <div class="teacher">
-                                    <img src="assets/images/.jpg" alt="img">   
-                                    <h3>Jherson H. Bartolay  Co-Developer</h3>                            
-                                </div> 
+                        <li class="img-1">
+                            <div class="dev-list-container">
+                                <img src="assets/images/jherson.jpg" alt="">
+                                
                             </div>
-                            <div>
-                                <div class="teacher">
-                                    <img src="assets/images/teacher.jpg" alt="img">   
-                                    <h3>John Mark Basa Anoche Co-Developer</h3>                            
-                                </div> 
-                            </div>
-                            
+                            <p><strong>Jherson Bartolay Co-developer</strong></p>
                         </li>
-                        <li> 
-                            <div>
-                                <div class="jayv">
-                                    <img src="assets/images/Sir_Javy.jpg" alt="img">
-                                    <h3>Hon. Jayv B. Astorias, RCrim SK Chairman of Brgy. Sibaguan</h3>
-                                </div>
-                                 
+                        <li class="img-2">
+                            <div class="dev-list-container">
+                                <img src="assets/images/teacher.jpg" alt="img">
+                                
                             </div>
-                            
+                            <p><strong>Mrs. John Mark Basa Anoche Co-developer</strong></p>
+                        </li>
+                        <li class="img-3">
+                            <div class="dev-list-container">
+                                <img src="assets/images/Sir_Javy.jpg" alt="img">
+                            </div>
+                            <p><strong>
+                                    HON. JAYV B. ASTORIAS, RCrim SK Chairman of Brgy. Sibaguan
+                                </strong>
+                            </p>
                         </li>
                     </ul>
                 </div>
@@ -97,12 +101,14 @@ clearstatcache();
         <div class="footer-content">
             <div class="footer-about">
                 <h3>About Duets</h3>
-                <p>Duets is a productivity platform designed to help students manage their tasks, study materials, and academic progress.</p>
+                <p>
+                    Duets is a productivity platform designed to help students manage their tasks, study materials, and academic progress.
+                </p>
             </div>
             <div class="footer-contact">
                 <h3>Contact Us</h3>
-                <p>Email: lorem ipsum</p>
-                <p>Phone: +63 912 345 6789</p>
+                <p>Email: </p>
+                <p>Phone: </p>
             </div>
             <div class="footer-links">
                 <h3>Developers</h3>

@@ -105,6 +105,7 @@
                             <div>
                                 <button id="addTaskBtn">Add Task</button>
                                 <button id="addLessonBtn">Add Lesson</button>
+                                <button id="addDemographicBtn" onclick="window.location.href='demographic_profile.php'">Add Demographic</button>
                             </div>
                         </div>
                         <div class="categories">

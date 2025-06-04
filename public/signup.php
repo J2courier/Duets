@@ -15,11 +15,14 @@ if (SessionManager::isLoggedIn()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/images/sk_img.jpg" type="image/png">
+
     <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/auth.css?v=<?php echo time(); ?>">
     <title>Sign Up - Duets</title>
 </head>
 <body>
+    <img src="assets/images/sk_img.jpg" alt="img" class="sk-img">
     <main>
         <div class="auth-container">
             <div class="auth-form-container">
@@ -80,6 +83,7 @@ if (SessionManager::isLoggedIn()) {
     </script>
 </body>
 </html>
+
 
 
 

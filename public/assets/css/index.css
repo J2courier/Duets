@@ -47,6 +47,7 @@ nav {
     padding: 20px;
     background-color: #ffc548;
     border-radius: 0px 0px 15px 15px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 nav ul {
@@ -64,11 +65,14 @@ nav ul li img {
     width: 40px;
     height: auto;
     object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 nav ul li:first-child {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    color: rgb(39, 39, 39);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
 }
 nav ul li:first-child div {
     display: flex;
@@ -80,18 +84,18 @@ nav ul li:first-child div {
 nav ul li button {
     padding: 8px 16px;
     border-radius: 4px;
-    background-color: #0321a8;
-    color: white;
+    background-color: #ffc548;
+    color: rgb(31, 31, 31);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 500;
     letter-spacing: 1px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(197, 119, 16, 0.5);
 }
 
 nav ul li button:hover {
-    background-color: #1e4e8c;
+    /* background-color: #1e4e8c; */
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
@@ -99,6 +103,124 @@ nav ul li button:hover {
 nav ul li button:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.theme-switch {
+    opacity: 0;
+    position: absolute;
+}
+
+.theme-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50px;
+    height: 26px;
+    background-color: #111;
+    border-radius: 50px;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.theme-icon {
+    font-size: 14px;
+    z-index: 1;
+}
+
+.slider {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform 0.3s, background-color 0.3s;
+    left: 2px;
+}
+
+.theme-switch:checked + .theme-label .slider {
+    transform: translateX(24px);
+    background-color: #0321a8;
+}
+
+.theme-switch:checked + .theme-label {
+    background-color: #f5f5f5;
+}
+
+.nav-double-btn {
+    display: flex;
+    align-items: center;
+}
+
+:root {
+    --bg-color: rgba(254, 254, 254, 0.938);
+    --text-color: #333;
+    --nav-bg: #ffc548;
+    --card-bg: white;
+    --footer-bg: #0321a8;
+    --footer-text: white;
+    --button-bg: #0321a8;
+    --button-text: white;
+    --button-hover: #1e4e8c;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e6e6e6;
+    --nav-bg: #2c2c2c;
+    --card-bg: #1e1e1e;
+    --footer-bg: #1e1e1e;
+    --footer-text: #e6e6e6;
+    --button-bg: #4c61c0;
+    --button-text: white;
+    --button-hover: #1e4e8c;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.welcome-txt {
+    color: var(--text-color);
+}
+
+.welcome-txt button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+.welcome-txt button:hover {
+    background-color: var(--button-hover);
+}
+
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+}
+
+.credit-section {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.Lords, .Jherson, .teacher {
+    background-color: var(--card-bg);
+    transition: background-color 0.3s;
 }
 
 .img-section {
@@ -115,7 +237,7 @@ nav ul li button:active {
     display: flex;
     /* border: solid 1px red; */
     width: 100%;
-    margin-bottom: 8%;
+    margin-bottom: 15%;
 }
 .welcome-img {
     /* border: solid 1px black; */
@@ -265,44 +387,51 @@ nav ul li button:active {
     width: 100%;
     display: flex;
     justify-content: center;
+    /* border: solid 1px black; */
+    padding: 2%;
 }
 
 .developers-list ul {
     display: flex;
     justify-content: center;
+    gap: 10%; /* Use consistent gap instead of space-between */
+    align-items: stretch; /* Ensure all items stretch to same height */
     width: 100%;
     padding: 0;
-    /* gap: 20%; */
+    margin: 0;
 }
 
 .developers-list ul li {
     list-style: none;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 25%; /* Set equal width for all list items */
+    max-width: 280px;
 }
 
-.jayv, .teacher {
+.developers-list ul li div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     gap: 10px;
-    padding: 15px;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    color: rgb(88, 88, 102);
+    height: 100%;
 }
 
- .jayv img, .teacher img {
-    height: 280px;
-    width: 280px;
-    border-radius: 5px;
-    object-fit: cover;
-    aspect-ratio: 2 / 2;
-   
+.developers-list ul li p {
+    color: rgb(58, 58, 58);
+    text-align: center;
+    min-height: 3em;
+    max-height: 3em;
+    width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .creators h1 {
@@ -326,26 +455,134 @@ nav ul li button:active {
     margin-bottom: 10%;
 }
 
-@media (max-width: 768px) {
-    .Lords, .Jherson, .teacher {
-        max-width: 250px;
-    }
-    
-    .Lords img, .Jherson img, .teacher img {
-        height: 150px;
-        width: 150px;
-    }
+/* Responsive Typography */
+html {
+    font-size: 16px; /* Base font size */
 }
 
-@media (max-width: 480px) {
-    .Lords, .Jherson, .teacher {
-        max-width: 100%;
-    }
-    
-    .Lords img, .Jherson img, .teacher img {
-        height: 140px;
-        width: 140px;
-    }
+h1, h2, h3, h4, h5, h6 {
+    letter-spacing: 1.5px;
+}
+
+.welcome-txt h1 {
+    padding: 5px;
+    letter-spacing: 1px;
+    font-size: clamp(2.5rem, 5vw, 6.5rem);
+    line-height: 1em;
+    color: black;
+}
+
+.welcome-txt h3 {
+    padding: 5px;
+    letter-spacing: 3px;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: rgb(56, 56, 56);
+}
+
+.welcome-txt p {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.welcome-txt button {
+    padding: clamp(8px, 1.5vw, 10px) clamp(16px, 2vw, 24px);
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+}
+
+.credit-section h1, .co-developers h1 {
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    letter-spacing: 2px;
+}
+
+.sk-img {
+    width: 40%;
+    height: auto;
+    object-fit: contain;
+    position: absolute;
+    z-index: -1;
+    top: 130%;
+}
+
+
+.acknowledgement-txt p {
+    line-height: 1.6;
+    text-align: justify;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    margin-bottom: 10%;
+}
+
+
+footer h3 {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+}
+
+footer p, footer li {
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+}
+
+/* Adjust container widths responsively */
+main {
+    width: clamp(300px, 80%, 1400px);
+}
+
+.acknowledgement-txt {
+    width: clamp(300px, 50%, 800px);
+}
+
+/* Maintain aspect ratio for images */
+.img-container1 img {
+    width: clamp(250px, 40vw, 550px);
+    height: auto;
+    max-height: clamp(250px, 40vw, 550px);
+    object-fit: contain;
+}
+
+/* Responsive image styling */
+.img-container1 img {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    object-fit: contain;
+}
+
+.welcome-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.spacer-img img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.dev-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
+.dev-list-container img {
+    width: clamp(130px, 15vw, 270px);
+    height: clamp(130px, 15vw, 270px);
+    border-radius: 5px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+}
+
+nav ul li img {
+    width: clamp(30px, 5vw, 40px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 @media (max-width: 768px) {
@@ -399,6 +636,7 @@ nav ul li button:active {
 footer {
     width: 100%;
     background-color: #0321a8;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
     border-radius: 10px 10px 0 0;
     padding: 40px 20px 20px;
     letter-spacing: 0.5px;
