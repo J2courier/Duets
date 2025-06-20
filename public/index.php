@@ -20,7 +20,7 @@ clearstatcache();
                 <li>
                     <div class="nav-name-logo">
                         <img src="assets/images/Seal_of_Capiz.png" alt="logo">    
-                        <h3>Duets</h3>
+                        <h3>Sk Sibaguan Database</h3>
                     </div>
                 </li>
                 <li>
@@ -40,8 +40,8 @@ clearstatcache();
                 </div>
 
                 <div class="welcome-txt">
-                    <h1> <strong>SANGGUNIANG KABATAAN</strong> </h1>
-                    <h3>Barangay Sibaguan, Roxas City</h3>
+                    <h1> <strong class="gradient-text"> SANGGUNIANG KABATAAN</strong> </h1>
+                    <h3 class="text-secondary">Barangay Sibaguan, Roxas City</h3>
                     <a href="signup.php"><button>Get Started</button></a>    
                 </div>
             </div>
@@ -70,28 +70,23 @@ clearstatcache();
             </div>
                 <div class="developers-list">
                     <ul>
-                        <li class="img-1">
+                        <li class="developer-card">
                             <div class="dev-list-container">
-                                <img src="assets/images/jherson.jpg" alt="">
-                                
+                                <img src="assets/images/j1.jpg" alt="Jherson Bartolay">
                             </div>
-                            <p><strong>Jherson Bartolay Co-developer</strong></p>
+                            <p><strong class="text-primary">Jherson Bartolay</strong><br><span class="text-muted">Co-developer</span></p>
                         </li>
-                        <li class="img-2">
+                        <li class="developer-card">
                             <div class="dev-list-container">
-                                <img src="assets/images/teacher.jpg" alt="img">
-                                
+                                <img src="assets/images/teacher.jpg" alt="John Mark Basa Anoche">
                             </div>
-                            <p><strong>Mrs. John Mark Basa Anoche Co-developer</strong></p>
+                            <p><strong class="text-primary">John Mark Basa Anoche</strong><br><span class="text-muted">Co-developer</span></p>
                         </li>
-                        <li class="img-3">
+                        <li class="developer-card">
                             <div class="dev-list-container">
-                                <img src="assets/images/Sir_Javy.jpg" alt="img">
+                                <img src="assets/images/Sir_Javy.jpg" alt="HON. JAYV B. ASTORIAS">
                             </div>
-                            <p><strong>
-                                    HON. JAYV B. ASTORIAS, RCrim SK Chairman of Brgy. Sibaguan
-                                </strong>
-                            </p>
+                            <p><strong class="text-primary">HON. JAYV B. ASTORIAS</strong><br><span class="text-muted">SK Chairman of Brgy. Sibaguan</span></p>
                         </li>
                     </ul>
                 </div>
@@ -102,19 +97,19 @@ clearstatcache();
             <div class="footer-about">
                 <h3>About Duets</h3>
                 <p>
-                    Duets is a productivity platform designed to help students manage their tasks, study materials, and academic progress.
+                    Duets is a productivity and data collection platform design for Sangguniang Kabataan of Barangay Sibaguan, Roxas City.
                 </p>
             </div>
             <div class="footer-contact">
                 <h3>Contact Us</h3>
-                <p>Email: </p>
-                <p>Phone: </p>
+                <p>Email: bartolayjherson@gmail.com</p>
+                <!-- <p>Phone: </p> -->
             </div>
             <div class="footer-links">
                 <h3>Developers</h3>
                 <ul>
-                    <li>Jherson Bartolay Co-Developer</li>
-                    <li>John Mark Anoche Co-Developer</li>
+                    <li>Jherson Bartolay</li>
+                    <li>John Mark Anoche</li>
                 </ul>
             </div>
         </div>
